@@ -1,5 +1,6 @@
 package com.github.doc.model;
 
+import com.github.doc.util.TypeClassLoaderHolder;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 import com.google.common.collect.Lists;
@@ -70,7 +71,11 @@ public class ObjectDoc extends ClassDoc {
                 }
             }
             if (!isImport) {
-                fieldClass = this.getPackageName() + "." + classOrInterfaceType.getNameAsString();
+                try {
+                    fieldClass = TypeClassLoaderHolder.tryGet(classOrInterfaceType.getNameAsString());
+                } catch (ClassNotFoundException e) {
+                    fieldClass = this.getPackageName() + "." + classOrInterfaceType.getNameAsString();
+                }
             }
         }
         this.getImports().add(fieldClass);

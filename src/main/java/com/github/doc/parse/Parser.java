@@ -3,7 +3,9 @@ package com.github.doc.parse;
 import com.github.doc.model.ClassDoc;
 import com.github.doc.model.FieldPropDoc;
 import com.github.doc.model.ObjectDoc;
+import com.github.doc.model.PropType;
 import com.github.doc.util.CollectionUtils;
+import com.github.doc.util.TypeClassLoaderHolder;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Modifier;
@@ -78,7 +80,11 @@ public interface Parser {
                 }
             }
             if (!isImport) {
-                extendsName = classDoc.getPackageName() + "." + classOrInterfaceType.getNameAsString();
+                try {
+                    extendsName = TypeClassLoaderHolder.tryGet(classOrInterfaceType.getNameAsString());
+                } catch (ClassNotFoundException e) {
+                    extendsName = classDoc.getPackageName() + "." + classOrInterfaceType.getNameAsString();
+                }
             }
         }
         classDoc.setExtendsFullName(extendsName);
@@ -105,6 +111,7 @@ public interface Parser {
                 propDoc.setName(variableDeclarator.getNameAsString());
                 propDoc.setType(variableDeclarator.getTypeAsString());
                 classDoc.setFieldClassSet(variableDeclarator.getType());
+                propDoc.setPropType(PropType.parse(variableDeclarator.getType(), classDoc));
 
                 if (variableDeclarator.getInitializer().isPresent()) {
                     propDoc.setDefaultValue(variableDeclarator.getInitializer().get().getTokenRange().orElseGet(null).toString());

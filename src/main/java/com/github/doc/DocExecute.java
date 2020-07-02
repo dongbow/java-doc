@@ -8,6 +8,7 @@ import com.github.doc.parse.InterfaceParser;
 import com.github.doc.parse.Parser;
 import com.github.doc.tool.InterfaceMerge;
 import com.github.doc.util.CollectionUtils;
+import com.github.doc.util.TypeClassLoaderHolder;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
@@ -67,6 +68,7 @@ public class DocExecute {
                 }
             }
         }
+        TypeClassLoaderHolder.remove();
         return classDocs;
     }
 
@@ -123,6 +125,7 @@ public class DocExecute {
                 }
             }
         }
+        TypeClassLoaderHolder.remove();
         return classDocs;
     }
 

@@ -52,6 +52,7 @@ public class FieldPropDoc extends PropDoc {
         newProp.setDefaultValue(fieldPropDoc.getDefaultValue());
         newProp.setComment(fieldPropDoc.getComment());
         newProp.setType(fieldPropDoc.getType());
+        newProp.setPropType(fieldPropDoc.getPropType().copy());
         return newProp;
     }
 }

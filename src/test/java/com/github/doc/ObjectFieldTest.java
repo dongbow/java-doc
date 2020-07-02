@@ -13,7 +13,7 @@ public class ObjectFieldTest {
 
     public static void main(String[] args) throws FileNotFoundException {
         String[] s = new String[]{
-                "/Users/dongbo/Documents/workspce/java-doc/src/test/java/com/github/doc/ObjectTest.java"
+                "/Users/dongbo/Documents/workspce/java-doc/src/test/java/com/github/doc/test/ObjectTest.java"
         };
         System.out.println(JSON.toJSONString(DocExecute.generateDoc(Arrays.asList(s))));
     }

@@ -15,4 +15,6 @@ public class PropDoc {
 
     private String type;
 
+    private PropType propType;
+
 }
