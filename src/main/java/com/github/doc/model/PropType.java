@@ -124,7 +124,7 @@ public class PropType {
     }
 
     @Data
-    private static class TypeSpecialProp {
+    public static class TypeSpecialProp {
 
         /**
          * 是否是数组
