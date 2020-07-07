@@ -20,7 +20,7 @@ import java.util.Objects;
 public class InitValue {
 
     public static Object parseValue(Expression expression) {
-        if (Objects.isNull(expression)) {
+        if (Objects.isNull(expression) || expression.isNullLiteralExpr()) {
             return null;
         }
         if (expression.isStringLiteralExpr()) {
