@@ -4,6 +4,7 @@ import com.github.doc.model.ClassDoc;
 import com.github.doc.model.FieldPropDoc;
 import com.github.doc.model.ObjectDoc;
 import com.github.doc.model.PropType;
+import com.github.doc.parse.tool.InitValue;
 import com.github.doc.util.CollectionUtils;
 import com.github.doc.util.TypeClassLoaderHolder;
 import com.github.javaparser.ast.CompilationUnit;
@@ -114,7 +115,7 @@ public interface Parser {
                 propDoc.setPropType(PropType.parse(variableDeclarator.getType(), classDoc));
 
                 if (variableDeclarator.getInitializer().isPresent()) {
-                    propDoc.setDefaultValue(variableDeclarator.getInitializer().get().getTokenRange().orElseGet(null).toString());
+                    propDoc.setDefaultValue(InitValue.parseValue(variableDeclarator.getInitializer().get()));
                 }
                 if (field.getComment().isPresent()) {
                     propDoc.parseComment(field.getComment().get().getContent(), classDoc);

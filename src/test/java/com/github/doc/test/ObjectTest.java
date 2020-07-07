@@ -14,9 +14,9 @@ public class ObjectTest {
 
     private Map<String, List<Map<List<String>, String>>> map;
 
-    private String name;
+    private String name = "s";
 
-    private int i;
+    private int i = 0;
 
     private int ints3[][];
 
