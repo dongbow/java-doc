@@ -16,6 +16,7 @@ import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
@@ -48,10 +49,14 @@ public interface Parser {
         if (declaration.getAnnotationByClass(Deprecated.class).isPresent()) {
             classDoc.setDeprecated(true);
         }
-        if (declaration.getParentNode().orElseGet(null) != null) {
+        if (declaration.getParentNode().orElse(null) != null) {
             CompilationUnit compilationUnit = (CompilationUnit) declaration.getParentNode().get();
-            classDoc.setPackageName(compilationUnit.getPackageDeclaration().orElseGet(null).getName().asString());
-            classDoc.setFullName(compilationUnit.getPackageDeclaration().orElseGet(null).getName().asString() + "." + classDoc.getName());
+            String pkg = null;
+            if (compilationUnit.getPackageDeclaration().orElse(null) != null) {
+                pkg = compilationUnit.getPackageDeclaration().get().getNameAsString();
+            }
+            classDoc.setPackageName(pkg);
+            classDoc.setFullName(StringUtils.isNotEmpty(pkg) ? pkg + "." + classDoc.getName() : classDoc.getName());
             if (CollectionUtils.isNotEmpty(compilationUnit.getImports())) {
                 for (ImportDeclaration anImport : compilationUnit.getImports()) {
                     classDoc.getImports().add(anImport.getNameAsString());

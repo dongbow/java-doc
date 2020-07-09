@@ -54,7 +54,7 @@ public class InitValue {
             }
             return tmp;
         }
-        return expression.getTokenRange().orElseGet(null).toString();
+        return expression.getTokenRange().isPresent() ? expression.getTokenRange().toString() : null;
     }
 
 }
